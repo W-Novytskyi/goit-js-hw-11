@@ -4,10 +4,10 @@ import NewsApiService from './news-service';
 import './css/styles.css';
 
 const refs = {
-    searchForm: document.querySelector('.search-form'),
-    loadMoreBtn: document.querySelector('.load-more'),
-    gallery: document.querySelector('.gallery')
-}
+  searchForm: document.querySelector('.search-form'),
+  loadMoreBtn: document.querySelector('.load-more'),
+  gallery: document.querySelector('.gallery')
+};
 
 const newsApiService = new NewsApiService();
 
@@ -17,19 +17,18 @@ refs.loadMoreBtn.addEventListener('click', onLoadMore);
 function onSearch(e) {
   e.preventDefault();
 
-  newsApiService.query = e.currentTarget.searchQuery.value.trim();
+  newsApiService.query = e.currentTarget.elements.searchQuery.value.trim();
     newsApiService.resetPage();
     
   newsApiService.fetchHits()
-      .then(({ data }) => {
-      if (data.total === 0) {
+      .then(data => {
+      if (data.totalHits === 0) {
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
       } else {
         renderImages(data.hits);
       }
     })
     .catch(error => {
-      Notify.failure('Something went wrong. Please try again later.');
       console.error(error);
     });
 }
@@ -37,11 +36,10 @@ function onSearch(e) {
 
 function onLoadMore() {
     newsApiService.fetchHits()
-        .then(({ data }) => {
+        .then(data => {
             renderImages(data.hits);
         })
         .catch(error => {
-            Notify.failure('Something went wrong. Please try again later.');
             console.error(error);
         });
 }
