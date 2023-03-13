@@ -44,7 +44,8 @@ function onLoadMore() {
         });
 }
 
-function renderImages(hits) {
+function renderImages(...hits) {
+  // console.log(data.hits);
     const markup = hits
         .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
             return `

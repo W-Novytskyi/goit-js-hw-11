@@ -33,8 +33,8 @@ export default class NewsApiService {
         return this.searchTerm;
     }
 
-    set query(newQuary) {
-        this.searchTerm = newQuary;
+    set query(newQuery) {
+        this.searchTerm = newQuery;
     }
 
 }
