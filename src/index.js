@@ -20,7 +20,7 @@ function onSearch(e) {
   newsApiService.query = e.currentTarget.searchQuery.value.trim();
     newsApiService.resetPage();
     
-  newsApiService.fetchArticles()
+  newsApiService.fetchHits()
       .then(({ data }) => {
       if (data.total === 0) {
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
@@ -36,7 +36,7 @@ function onSearch(e) {
 
 
 function onLoadMore() {
-    newsApiService.fetchArticles()
+    newsApiService.fetchHits()
         .then(({ data }) => {
             renderImages(data.hits);
         })
@@ -46,34 +46,32 @@ function onLoadMore() {
         });
 }
 
-
 function renderImages(hits) {
     const markup = hits
-        .map(hit => {
-        return `
-            <div class="photo-card">
-                <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
-                <div class="stats">
-                    <p class="stats-item">
-                        <i class="material-icons">thumb_up</i>
-                        ${hit.likes}
-                    </p>
-                    <p class="stats-item">
-                        <i class="material-icons">visibility</i>
-                        ${hit.views}
-                    </p>
-                    <p class="stats-item">
-                        <i class="material-icons">comment</i>
-                        ${hit.comments}
-                    </p>
-                    <p class="stats-item">
-                        <i class="material-icons">cloud_download</i>
-                        ${hit.downloads}
-                    </p>
-                </div>
-            </div>
+        .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
+            return `
+        <div class="photo-card">
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <div class="info">
+        <p class="info-item">
+        <b>Likes: ${likes}</b>
+        </p>
+        <p class="info-item">
+        <b>Views: ${views}</b>
+        </p>
+        <p class="info-item">
+        <b>Comments: ${comments}</b>
+        </p>
+        <p class="info-item">
+        <b>Downloads: ${downloads}</b>
+        </p>
+        </div>
+        </div>
         `;
-    }).join('');
+        })
+        .join('');
 
     refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
+
+

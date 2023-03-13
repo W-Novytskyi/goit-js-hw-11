@@ -9,7 +9,7 @@ export default class NewsApiService {
         this.page = 1;
     }
 
-    fetchArticles() {
+    fetchHits() {
         const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchTerm}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
 
         return axios.get(url)
