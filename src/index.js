@@ -1,5 +1,7 @@
 import { Notify } from 'notiflix';
 import NewsApiService from './news-service';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import './css/styles.css';
 
 const refs = {
@@ -57,7 +59,11 @@ function renderImages(hits) {
     .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
       return `
       <div class="photo-card">
+
+          <a href="${largeImageURL}" class="gallery-item">
       <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+      
+                </a>
       <div class="info">
       <p class="info-item">
       <b>Likes: ${likes}</b>
@@ -78,8 +84,14 @@ function renderImages(hits) {
     .join('');
 
   refs.gallery.insertAdjacentHTML('beforeend', markup);
+
+  const lightbox = new SimpleLightbox('.gallery-item');
+  lightbox.refresh();
 }
 
 function clearGallery() {
   refs.gallery.innerHTML = '';
+  
+  const lightbox = new SimpleLightbox('.gallery-item');
+  lightbox.refresh();
 }
