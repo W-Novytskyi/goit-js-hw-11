@@ -59,11 +59,9 @@ function renderImages(hits) {
     .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
       return `
       <div class="photo-card">
-
-          <a href="${largeImageURL}" class="gallery-item">
+      <a href="${largeImageURL}" class="gallery-item">
       <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-      
-                </a>
+      </a>
       <div class="info">
       <p class="info-item">
       <b>Likes: ${likes}</b>
